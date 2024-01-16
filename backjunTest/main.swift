@@ -124,12 +124,77 @@ import Foundation
 //print("\(hour) \(minute)")
 
 //2525번
-let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
-let arr2 = Int(readLine()!)!
+//let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+//let arr2 = Int(readLine()!)!
+//
+//var currentHour = arr[0]
+//var currentMinute = arr[1]
+//
+//var endHour = 0
+//var endMinnute = 0
+//var addHour = 0
+//
+//currentMinute = currentMinute + arr2
+//
+//if currentMinute > 59 {
+//    endMinnute = currentMinute % 60 //오븐구이가 끝나는 분
+//    addHour = currentMinute / 60 //오븐구이로 구해진 시간
+//    endHour = addHour + currentHour //오븐구이 시간 + 현재 시간
+//}else{
+//    endMinnute = currentMinute
+//}
+//
+//if endHour > 23 {
+//    endHour = endHour % 24
+//}else{
+//    endHour = currentHour + addHour
+//}
+//
+//print("\(endHour) \(endMinnute)")
 
-var currentHour = arr[0]
-var currentMinute = arr[1]
 
-currentMinute = currentMinute + arr2
+//2480번
+//let arr = readLine()!.split(separator: " ").map{Int(String($0))!}
+//
+//var firDice = arr[0]
+//var secDice = arr[1]
+//var thiDice = arr[2]
+//var reward = 0
+//var sameNum = 0
+//var sortArr: [Int] = []
+//
+////같은 눈이 3개가 나오면 10,000원+(같은 눈)×1,000원의 상금을 받게 된다.
+////if firDice == secDice && secDice == thiDice {
+//if (arr.filter { $0 == firDice }.count == 3) {
+//    reward = 10000 + firDice * 1000
+//}else if(firDice == secDice && firDice != thiDice){
+//    reward = 1000 + firDice * 100
+//}else if(secDice == firDice && secDice != thiDice){
+//    reward = 1000 + secDice * 100
+//}else if(thiDice == firDice && thiDice != secDice){ //같은 눈이 2개만 나오는 경우에는 1,000원+(같은 눈)×100원의 상금을 받게 된다.
+//    reward = 1000 + thiDice * 100
+//}else if(secDice == thiDice && secDice != firDice){
+//    reward = 1000 + thiDice * 100
+//    //모두 다른 눈이 나오는 경우에는 (그 중 가장 큰 눈)×100원의 상금을 받게 된다.
+//}else if(arr.filter { $0 == firDice }.count == 1 && arr.filter { $0 == secDice }.count == 1 && arr.filter { $0 == thiDice }.count == 1 ){
+//    sortArr = arr.sorted(by: >)
+//    reward = sortArr[0] * 100
+//}
+//
+//print(reward)
 
-print("\(currentHour) \(currentMinute) \(arr2)")
+//코드 줄여서 짰을 경우
+let arr = readLine()!.split(separator: " ").compactMap{Int(String($0))!}
+//Dictionary(grouping:by:) 및 mapValues를 사용하여 각 숫자의 출현 횟수를 세어봅니다.
+let occurrences = Dictionary(grouping: arr, by: { $0 }).mapValues { $0.count }
+
+if occurrences.values.contains(3) {
+    let num = occurrences.first { $0.value == 3 }!.key
+    print(10000 + num * 1000)
+} else if occurrences.values.contains(2) {
+    let num = occurrences.first { $0.value == 2 }!.key
+    print(1000 + num * 100)
+} else {
+    let maxNum = arr.max()!
+    print(maxNum * 100)
+}
